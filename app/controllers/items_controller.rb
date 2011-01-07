@@ -80,4 +80,13 @@ class ItemsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  # RSS feed
+  def feed
+  	@items = Item.all(:select => "title, url, posted_at", :order => "posted_at DESC", :limit => 5)
+  	respond_to do |format|
+  	  format.html
+  	  format.rss { render :layout => false } #index.rss.builder
+  	end
+   end
 end
